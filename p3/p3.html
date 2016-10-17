@@ -11749,13 +11749,14 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Data-Wrangling-with-MongoDB">Data Wrangling with MongoDB<a class="anchor-link" href="#Data-Wrangling-with-MongoDB">&#182;</a></h1><h3 id="OpenStreetMap-Sample-Project">OpenStreetMap Sample Project<a class="anchor-link" href="#OpenStreetMap-Sample-Project">&#182;</a></h3><h4 id="Map-Area:-Honolulu,-Hawaii,-United-States">Map Area: Honolulu, Hawaii, United States<a class="anchor-link" href="#Map-Area:-Honolulu,-Hawaii,-United-States">&#182;</a></h4>
+<h1 id="Data-Wrangling-with-MongoDB">Data Wrangling with MongoDB<a class="anchor-link" href="#Data-Wrangling-with-MongoDB">&#182;</a></h1><h3 id="OpenStreetMap-Sample-Project">OpenStreetMap Sample Project<a class="anchor-link" href="#OpenStreetMap-Sample-Project">&#182;</a></h3><h4 id="Map-Area:-Honolulu,-Hawaii,-United-States">Map Area: Honolulu, Hawaii, United States<a class="anchor-link" href="#Map-Area:-Honolulu,-Hawaii,-United-States">&#182;</a></h4><p><a href="http://www.openstreetmap.org/#map=10/21.4860/-157.9710">http://www.openstreetmap.org/#map=10/21.4860/-157.9710</a></p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[103]:</div>
+<div class="prompt input_prompt">In&nbsp;[135]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c">#importing all necessary files</span>
@@ -11777,10 +11778,11 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[107]:</div>
+<div class="prompt input_prompt">In&nbsp;[136]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">datadir</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+<div class=" highlight hl-ipython2"><pre><span class="c">#Fetching osm data in python variable map_data</span>
+<span class="n">datadir</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
 <span class="n">datafile</span> <span class="o">=</span> <span class="s">&quot;honolulu_hawaii.osm&quot;</span>
 <span class="n">map_data</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir</span><span class="p">,</span> <span class="n">datafile</span><span class="p">)</span>
 </pre></div>
@@ -11801,10 +11803,11 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[120]:</div>
+<div class="prompt input_prompt">In&nbsp;[137]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="k">def</span> <span class="nf">count_tags</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span> <span class="c">##iterative parsing using Element tree to process the map file and find out what tags are there</span>
+<div class=" highlight hl-ipython2"><pre><span class="c">##iterative parsing using Element tree to process the map file and find out what tags are there</span>
+<span class="k">def</span> <span class="nf">count_tags</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
         <span class="n">tags</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">event</span><span class="p">,</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">ET</span><span class="o">.</span><span class="n">iterparse</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">elem</span><span class="o">.</span><span class="n">tag</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span> 
@@ -11854,7 +11857,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[121]:</div>
+<div class="prompt input_prompt">In&nbsp;[138]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c">#people invovlved in the map editing.</span>
@@ -11877,7 +11880,7 @@ div#notebook {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[121]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[138]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -11892,19 +11895,64 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[122]:</div>
+<div class="prompt input_prompt">In&nbsp;[139]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">lower</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;^([a-z]|_)*$&#39;</span><span class="p">)</span>                    <span class="c"># Regular Expressions for different cases matching</span>
 <span class="n">lower_colon</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;^([a-z]|_)*:([a-z]|_)*$&#39;</span><span class="p">)</span>
 <span class="n">problemchars</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;[=\+/&amp;&lt;&gt;;</span><span class="se">\&#39;</span><span class="s">&quot;\?%#$@\,\. \t\r\n]&#39;</span><span class="p">)</span>
 <span class="n">street_type_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;\b\S+\.?$&#39;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
+</pre></div>
 
-<span class="c"># initial expected street names</span>
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote><p>These expressions are used for validating a string in particular format.</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[140]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># initial expected street names</span>
 <span class="n">expected</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Street&quot;</span><span class="p">,</span> <span class="s">&quot;Avenue&quot;</span><span class="p">,</span> <span class="s">&quot;Boulevard&quot;</span><span class="p">,</span><span class="s">&quot;Broadway&quot;</span><span class="p">,</span><span class="s">&quot;Drive&quot;</span><span class="p">,</span> <span class="s">&quot;Court&quot;</span><span class="p">,</span> <span class="s">&quot;Place&quot;</span><span class="p">,</span> <span class="s">&quot;Square&quot;</span><span class="p">,</span> <span class="s">&quot;Lane&quot;</span><span class="p">,</span>
             <span class="s">&quot;Road&quot;</span><span class="p">,</span> <span class="s">&quot;Trail&quot;</span><span class="p">,</span> <span class="s">&quot;Parkway&quot;</span><span class="p">]</span>
+</pre></div>
 
-<span class="k">def</span> <span class="nf">key_type</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">keys</span><span class="p">):</span>                  <span class="c">#Finding counts for different tag categories</span>
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote><p>Initially we consider some common words as expected street names.</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[141]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c">#Finding counts for different tag categories</span>
+<span class="k">def</span> <span class="nf">key_type</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">keys</span><span class="p">):</span>                  
     <span class="k">if</span> <span class="n">element</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s">&quot;tag&quot;</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">element</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="s">&#39;tag&#39;</span><span class="p">):</span>
             <span class="n">k</span> <span class="o">=</span> <span class="n">tag</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;k&#39;</span><span class="p">)</span>
@@ -11919,8 +11967,8 @@ div#notebook {
                 <span class="n">keys</span><span class="p">[</span><span class="s">&#39;other&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="k">return</span> <span class="n">keys</span>
 
-
-<span class="k">def</span> <span class="nf">process_map</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>                      <span class="c">#Distributing in different categories and finding tag count</span>
+ <span class="c">#Distributing in different categories and finding tag count</span>
+<span class="k">def</span> <span class="nf">process_map</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>                     
     <span class="n">keys</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;lower&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&quot;lower_colon&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&quot;problemchars&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&quot;other&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>  
     <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">ET</span><span class="o">.</span><span class="n">iterparse</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
         <span class="n">keys</span> <span class="o">=</span> <span class="n">key_type</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">keys</span><span class="p">)</span>
@@ -11955,10 +12003,9 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-
-<pre><code>For the function: key_type &amp; process_map. We check the "k" value for each "
-
-For the function 'key_type', we have a count of each of three tag categories in a dictionary: "lower", for tags that contain only lowercase letters and are valid, "lower_colon", for otherwise valid tags with a colon in their names, "problemchars", for tags with problematic characters, and</code></pre>
+<blockquote><p>For the function: key_type &amp; process_map. We check the "k" value for each</p>
+<p>For the function 'key_type', we have a count of each of three tag categories in a dictionary: "lower", for tags that contain only lowercase letters and are valid, "lower_colon", for otherwise valid tags with a colon in their names, "problemchars", for tags with problematic characters, and</p>
+</blockquote>
 
 </div>
 </div>
@@ -11974,7 +12021,7 @@ For the function 'key_type', we have a count of each of three tag categories in 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[123]:</div>
+<div class="prompt input_prompt">In&nbsp;[142]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="k">def</span> <span class="nf">audit_street_type</span><span class="p">(</span><span class="n">street_types</span><span class="p">,</span> <span class="n">street_name</span><span class="p">):</span>    <span class="c"># add unexpected street name to a list</span>
@@ -12058,9 +12105,21 @@ For the function 'key_type', we have a count of each of three tag categories in 
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote><p>We found that lot of abbreviations are used in the street names.</p>
+<p>So some fix of names is required for that which can be done by mapping abbreviations to their full form.</p>
+</blockquote>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[146]:</div>
+<div class="prompt input_prompt">In&nbsp;[143]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">mapping</span><span class="o">=</span><span class="p">{</span>  <span class="s">&#39;Ave&#39;</span>  <span class="p">:</span> <span class="s">&#39;Avenue&#39;</span><span class="p">,</span>             <span class="c">#mapping abbreviations to their full form</span>
@@ -12094,19 +12153,20 @@ For the function 'key_type', we have a count of each of three tag categories in 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[147]:</div>
+<div class="prompt input_prompt">In&nbsp;[144]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="k">def</span> <span class="nf">update_name</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="n">regex</span><span class="p">):</span>                         <span class="c">#updating street names to correct form</span>
+<div class=" highlight hl-ipython2"><pre><span class="c">#updating street names to correct form</span>
+<span class="k">def</span> <span class="nf">update_name</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="n">regex</span><span class="p">):</span>                         
     <span class="n">m</span> <span class="o">=</span> <span class="n">regex</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">m</span><span class="p">:</span>
         <span class="n">street_type</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">street_type</span> <span class="ow">in</span> <span class="n">mapping</span><span class="p">:</span>
-            <span class="n">name</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">regex</span><span class="p">,</span> <span class="n">mapping</span><span class="p">[</span><span class="n">street_type</span><span class="p">],</span> <span class="n">name</span><span class="p">)</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">regex</span><span class="p">,</span> <span class="n">mapping</span><span class="p">[</span><span class="n">street_type</span><span class="p">],</span> <span class="n">name</span><span class="p">)</span>     <span class="c">#replacing abbreviation with mapped value</span>
 
     <span class="k">return</span> <span class="n">name</span>
 
-<span class="k">for</span> <span class="n">street_type</span><span class="p">,</span> <span class="n">ways</span> <span class="ow">in</span> <span class="n">st_types</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+<span class="k">for</span> <span class="n">street_type</span><span class="p">,</span> <span class="n">ways</span> <span class="ow">in</span> <span class="n">st_types</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>       <span class="c">#iterating through all the street names and fixing it</span>
     <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">ways</span><span class="p">:</span>
         <span class="n">better_name</span> <span class="o">=</span> <span class="n">update_name</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="n">street_type_re</span><span class="p">)</span>
         <span class="k">print</span> <span class="n">name</span><span class="p">,</span> <span class="s">&quot;=&gt;&quot;</span><span class="p">,</span> <span class="n">better_name</span>
@@ -12175,19 +12235,31 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<blockquote><p>All abbreviations in street names are fixed by mapping.</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Problems-in-zip-codes">Problems in zip codes<a class="anchor-link" href="#Problems-in-zip-codes">&#182;</a></h3>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[148]:</div>
+<div class="prompt input_prompt">In&nbsp;[145]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>     <span class="c"># Auditing all zip codes in the given data</span>
+<div class=" highlight hl-ipython2"><pre><span class="c"># Auditing all zip codes in the given data</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>     
 
 <span class="k">def</span> <span class="nf">audit_zipcode</span><span class="p">(</span><span class="n">invalid_zipcodes</span><span class="p">,</span> <span class="n">zipcode</span><span class="p">):</span>
-    <span class="n">twoDigits</span> <span class="o">=</span> <span class="n">zipcode</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">twoDigits</span> <span class="o">=</span> <span class="n">zipcode</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>        <span class="c">#validating zip code and adding it to invalid if not satisfying the conditions</span>
     
     <span class="k">if</span> <span class="ow">not</span> <span class="n">zipcode</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
         <span class="n">invalid_zipcodes</span><span class="p">[</span><span class="n">twoDigits</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">zipcode</span><span class="p">)</span>
@@ -12198,12 +12270,12 @@ Kalakaua Ave =&gt; Kalakaua Avenue
         <span class="n">invalid_zipcodes</span><span class="p">[</span><span class="n">twoDigits</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">zipcode</span><span class="p">)</span> 
         
 <span class="k">def</span> <span class="nf">is_zipcode</span><span class="p">(</span><span class="n">elem</span><span class="p">):</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">elem</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&#39;k&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;addr:postcode&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">elem</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&#39;k&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;addr:postcode&quot;</span><span class="p">)</span>  
 
 <span class="k">def</span> <span class="nf">audit_zip</span><span class="p">(</span><span class="n">osmfile</span><span class="p">):</span>
     <span class="n">osm_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">osmfile</span><span class="p">,</span> <span class="s">&quot;r&quot;</span><span class="p">)</span>
     <span class="n">invalid_zipcodes</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">event</span><span class="p">,</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">ET</span><span class="o">.</span><span class="n">iterparse</span><span class="p">(</span><span class="n">osm_file</span><span class="p">,</span> <span class="n">events</span><span class="o">=</span><span class="p">(</span><span class="s">&quot;start&quot;</span><span class="p">,)):</span>
+    <span class="k">for</span> <span class="n">event</span><span class="p">,</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">ET</span><span class="o">.</span><span class="n">iterparse</span><span class="p">(</span><span class="n">osm_file</span><span class="p">,</span> <span class="n">events</span><span class="o">=</span><span class="p">(</span><span class="s">&quot;start&quot;</span><span class="p">,)):</span> <span class="c">#calling audit_zipcode iterating on all the zipcodes</span>
 
         <span class="k">if</span> <span class="n">elem</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s">&quot;node&quot;</span> <span class="ow">or</span> <span class="n">elem</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s">&quot;way&quot;</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">elem</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="s">&quot;tag&quot;</span><span class="p">):</span>
@@ -12224,7 +12296,7 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[148]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[145]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -12251,18 +12323,19 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Some zip codes contain hypen b/w them.</p>
+<blockquote><p>Some zip codes contain hypen b/w them.</p>
 <p>One type of zip code contain text.</p>
+</blockquote>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[149]:</div>
+<div class="prompt input_prompt">In&nbsp;[146]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="k">def</span> <span class="nf">update_zip</span><span class="p">(</span><span class="n">zipcode</span><span class="p">):</span>                          <span class="c"># Fixing zip codes</span>
+<div class=" highlight hl-ipython2"><pre><span class="k">def</span> <span class="nf">update_zip</span><span class="p">(</span><span class="n">zipcode</span><span class="p">):</span>                          <span class="c"># Fixing zip codes in case it don&#39;t match the desired pattern.</span>
     <span class="n">testNum</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">&#39;[a-zA-Z]*&#39;</span><span class="p">,</span> <span class="n">zipcode</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">testNum</span><span class="p">:</span>
         <span class="n">testNum</span> <span class="o">=</span> <span class="n">testNum</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -12314,7 +12387,8 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Zip code errors were solved i.e removing hypen and text characters.</p>
+<blockquote><p>Zip code errors were solved i.e removing hypen and text characters.</p>
+</blockquote>
 
 </div>
 </div>
@@ -12330,7 +12404,7 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[150]:</div>
+<div class="prompt input_prompt">In&nbsp;[147]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">CREATED</span> <span class="o">=</span> <span class="p">[</span> <span class="s">&quot;version&quot;</span><span class="p">,</span> <span class="s">&quot;changeset&quot;</span><span class="p">,</span> <span class="s">&quot;timestamp&quot;</span><span class="p">,</span> <span class="s">&quot;user&quot;</span><span class="p">,</span> <span class="s">&quot;uid&quot;</span><span class="p">]</span>    <span class="c">#created field for json object</span>
@@ -12341,7 +12415,7 @@ Kalakaua Ave =&gt; Kalakaua Avenue
             <span class="n">name</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="n">key</span><span class="p">,</span><span class="n">mapping</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">name</span>
 
-<span class="k">def</span> <span class="nf">shape_element</span><span class="p">(</span><span class="n">element</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">shape_element</span><span class="p">(</span><span class="n">element</span><span class="p">):</span>  <span class="c">#shaping osm data in json format</span>
     <span class="n">node</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">node</span><span class="p">[</span><span class="s">&quot;created&quot;</span><span class="p">]</span><span class="o">=</span><span class="p">{}</span>
     <span class="n">node</span><span class="p">[</span><span class="s">&quot;address&quot;</span><span class="p">]</span><span class="o">=</span><span class="p">{}</span>
@@ -12370,14 +12444,15 @@ Kalakaua Ave =&gt; Kalakaua Avenue
         <span class="k">if</span> <span class="s">&quot;lon&quot;</span> <span class="ow">in</span> <span class="n">element</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
             <span class="n">node</span><span class="p">[</span><span class="s">&quot;pos&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&quot;lon&quot;</span><span class="p">]))</span>
 
-        
+        <span class="c">#iterating over tags in the given data.</span>
         <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">element</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="s">&quot;tag&quot;</span><span class="p">):</span>
             <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">problemchars</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">tag</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&#39;k&#39;</span><span class="p">])):</span>
                 <span class="k">if</span> <span class="n">tag</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&#39;k&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;addr:housenumber&quot;</span><span class="p">:</span>
                     <span class="n">node</span><span class="p">[</span><span class="s">&quot;address&quot;</span><span class="p">][</span><span class="s">&quot;housenumber&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">tag</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&#39;v&#39;</span><span class="p">]</span>
-                    
+                <span class="c"># updating zip codes by calling update_zip method defined above    </span>
                 <span class="k">if</span> <span class="n">tag</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&#39;k&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;addr:postcode&quot;</span><span class="p">:</span>
                     <span class="n">node</span><span class="p">[</span><span class="s">&quot;address&quot;</span><span class="p">][</span><span class="s">&quot;postcode&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">tag</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&#39;v&#39;</span><span class="p">]</span>
+                    <span class="n">node</span><span class="p">[</span><span class="s">&quot;address&quot;</span><span class="p">][</span><span class="s">&quot;postcode&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">update_zip</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s">&quot;address&quot;</span><span class="p">][</span><span class="s">&quot;postcode&quot;</span><span class="p">])</span>
                 
                 <span class="c"># handling the street attribute, update incorrect names using the strategy developed before   </span>
                 <span class="k">if</span> <span class="n">tag</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&#39;k&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;addr:street&quot;</span><span class="p">:</span>
@@ -12423,7 +12498,7 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[151]:</div>
+<div class="prompt input_prompt">In&nbsp;[148]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c"># process the file</span>
@@ -12431,6 +12506,43 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 </pre></div>
 
 </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[149]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c">#Above method shapes the data in following JSON Format</span>
+<span class="n">data</span><span class="p">[</span><span class="mi">352</span><span class="p">]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[149]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>{&#39;created&#39;: {&#39;changeset&#39;: &#39;3561802&#39;,
+  &#39;timestamp&#39;: &#39;2010-01-07T13:30:40Z&#39;,
+  &#39;uid&#39;: &#39;147510&#39;,
+  &#39;user&#39;: &#39;woodpeck_fixbot&#39;,
+  &#39;version&#39;: &#39;2&#39;},
+ &#39;id&#39;: &#39;110502291&#39;,
+ &#39;pos&#39;: [21.385667, -158.102447],
+ &#39;type&#39;: &#39;node&#39;}</pre>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -12446,39 +12558,23 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[159]:</div>
+<div class="prompt input_prompt">In&nbsp;[150]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="sd">&#39;&#39;&#39;client = MongoClient()      #importing json data to mongo db locally</span>
-<span class="sd">db = client.honolulu</span>
-<span class="sd">collection = db.honolulu</span>
-<span class="sd">collection.insert(data)&#39;&#39;&#39;</span>
+<div class=" highlight hl-ipython2"><pre><span class="n">client</span> <span class="o">=</span> <span class="n">MongoClient</span><span class="p">()</span>      <span class="c"># making mongodb connection importing json data to mongo db locally</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">honolulu</span>
+<span class="n">collection</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">honolulu</span>
+<span class="c">#collection.insert(data)       #insertion is done one time only ucomment it if haven&#39;t inserted.</span>
 </pre></div>
 
 </div>
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[159]:</div>
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>&#39;client = MongoClient()      #importing json data to mongo db locally\ndb = client.honolulu\ncollection = db.honolulu\ncollection.insert(data)&#39;</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[160]:</div>
+<div class="prompt input_prompt">In&nbsp;[151]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">collection</span>         <span class="c">#collection named honolulu for this data</span>
@@ -12492,7 +12588,7 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[160]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[151]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -12516,10 +12612,10 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[161]:</div>
+<div class="prompt input_prompt">In&nbsp;[152]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">cal_data</span><span class="p">)</span><span class="o">/</span><span class="mi">1024</span><span class="o">/</span><span class="mi">1024</span>        <span class="c">#Size of xml file in MB</span>
+<div class=" highlight hl-ipython2"><pre><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">map_data</span><span class="p">)</span><span class="o">/</span><span class="mi">1024</span><span class="o">/</span><span class="mi">1024</span>        <span class="c">#Size of xml file in MB</span>
 </pre></div>
 
 </div>
@@ -12530,7 +12626,7 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[161]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[152]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -12545,7 +12641,7 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[162]:</div>
+<div class="prompt input_prompt">In&nbsp;[153]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="s">&quot;honolulu_hawaii.osm.json&quot;</span><span class="p">)</span><span class="o">/</span><span class="mi">1024</span><span class="o">/</span><span class="mi">1024</span>      <span class="c">#Size Of json file in MB</span>
@@ -12559,7 +12655,7 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[162]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[153]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -12574,7 +12670,7 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[163]:</div>
+<div class="prompt input_prompt">In&nbsp;[154]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">collection</span><span class="o">.</span><span class="n">find</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>      <span class="c">#Total number of documents inside Mongo DB collection honolulu</span>
@@ -12588,7 +12684,7 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[163]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[154]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -12603,7 +12699,7 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[164]:</div>
+<div class="prompt input_prompt">In&nbsp;[155]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c"># Number of unique users</span>
@@ -12618,7 +12714,7 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[164]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[155]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -12633,7 +12729,7 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[165]:</div>
+<div class="prompt input_prompt">In&nbsp;[156]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c"># Number of nodes</span>
@@ -12648,7 +12744,7 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[165]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[156]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -12663,7 +12759,7 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[166]:</div>
+<div class="prompt input_prompt">In&nbsp;[157]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c"># Number of ways</span>
@@ -12678,7 +12774,7 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[166]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[157]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -12693,7 +12789,7 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[168]:</div>
+<div class="prompt input_prompt">In&nbsp;[158]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c">#Top five users with most contributions</span>
@@ -12714,7 +12810,7 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[168]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[158]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -12743,7 +12839,7 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[169]:</div>
+<div class="prompt input_prompt">In&nbsp;[159]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c">#Proportion of the top user contributions</span>
@@ -12764,7 +12860,7 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[169]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[159]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -12802,13 +12898,13 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[173]:</div>
+<div class="prompt input_prompt">In&nbsp;[160]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c">#Most common amenities in the area</span>
 <span class="n">aminity</span><span class="o">=</span><span class="p">[{</span><span class="s">&quot;$match&quot;</span><span class="p">:{</span><span class="s">&quot;amenity&quot;</span><span class="p">:{</span><span class="s">&quot;$exists&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">}}},</span>
                               <span class="p">{</span><span class="s">&quot;$group&quot;</span><span class="p">:{</span><span class="s">&quot;_id&quot;</span><span class="p">:</span><span class="s">&quot;$amenity&quot;</span><span class="p">,</span><span class="s">&quot;count&quot;</span><span class="p">:{</span><span class="s">&quot;$sum&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">}}},</span>
-                              <span class="p">{</span><span class="s">&quot;$sort&quot;</span><span class="p">:{</span><span class="s">&quot;count&quot;</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">}},</span> <span class="p">{</span><span class="s">&quot;$limit&quot;</span><span class="p">:</span><span class="mi">10</span><span class="p">}]</span>
+                              <span class="p">{</span><span class="s">&quot;$sort&quot;</span><span class="p">:{</span><span class="s">&quot;count&quot;</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">}},{</span><span class="s">&quot;$limit&quot;</span><span class="p">:</span><span class="mi">10</span><span class="p">}]</span>
 <span class="n">result</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">collection</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">aminity</span><span class="p">))</span>
 <span class="n">result</span>
 </pre></div>
@@ -12821,7 +12917,7 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[173]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[160]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -12855,7 +12951,7 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[172]:</div>
+<div class="prompt input_prompt">In&nbsp;[161]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c"># Types of parking and their frequency </span>
@@ -12875,7 +12971,7 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[172]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[161]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -12902,7 +12998,7 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[174]:</div>
+<div class="prompt input_prompt">In&nbsp;[162]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c">#cuisines in restaurants</span>
@@ -12922,7 +13018,7 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[174]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[162]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -12944,9 +13040,19 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In restaurant most popular cuisine is Pizzas.</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[175]:</div>
+<div class="prompt input_prompt">In&nbsp;[163]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c">#cuisines in fast_food</span>
@@ -12966,7 +13072,7 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[175]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[163]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -13000,7 +13106,171 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[178]:</div>
+<div class="prompt input_prompt">In&nbsp;[164]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c">#Overall cusines of Honolulu</span>
+<span class="n">pipeline</span> <span class="o">=</span> <span class="p">[{</span><span class="s">&quot;$match&quot;</span><span class="p">:{</span><span class="s">&quot;cuisine&quot;</span><span class="p">:{</span><span class="s">&quot;$exists&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">}}},</span> 
+            <span class="p">{</span><span class="s">&quot;$group&quot;</span><span class="p">:{</span><span class="s">&quot;_id&quot;</span><span class="p">:</span><span class="s">&quot;$cuisine&quot;</span><span class="p">,</span> <span class="s">&quot;count&quot;</span><span class="p">:{</span><span class="s">&quot;$sum&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">}}},</span>        
+            <span class="p">{</span><span class="s">&quot;$sort&quot;</span><span class="p">:{</span><span class="s">&quot;count&quot;</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">}},</span> 
+            <span class="p">{</span><span class="s">&quot;$limit&quot;</span><span class="p">:</span><span class="mi">10</span><span class="p">}]</span>
+<span class="n">result</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">collection</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">pipeline</span><span class="p">))</span>
+<span class="n">result</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[164]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[{u&#39;_id&#39;: u&#39;burger&#39;, u&#39;count&#39;: 22},
+ {u&#39;_id&#39;: u&#39;coffee_shop&#39;, u&#39;count&#39;: 12},
+ {u&#39;_id&#39;: u&#39;pizza&#39;, u&#39;count&#39;: 11},
+ {u&#39;_id&#39;: u&#39;japanese&#39;, u&#39;count&#39;: 8},
+ {u&#39;_id&#39;: u&#39;regional&#39;, u&#39;count&#39;: 7},
+ {u&#39;_id&#39;: u&#39;american&#39;, u&#39;count&#39;: 7},
+ {u&#39;_id&#39;: u&#39;mexican&#39;, u&#39;count&#39;: 6},
+ {u&#39;_id&#39;: u&#39;chinese&#39;, u&#39;count&#39;: 6},
+ {u&#39;_id&#39;: u&#39;sandwich&#39;, u&#39;count&#39;: 6},
+ {u&#39;_id&#39;: u&#39;sushi&#39;, u&#39;count&#39;: 5}]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This data shows that most people prefer having Burgers in cuisines</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[165]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c">#different type of buildings in Honolulu dataset</span>
+<span class="n">pipeline</span> <span class="o">=</span> <span class="p">[{</span><span class="s">&quot;$match&quot;</span><span class="p">:{</span><span class="s">&quot;building&quot;</span><span class="p">:{</span><span class="s">&quot;$exists&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">}}},</span> 
+            <span class="p">{</span><span class="s">&quot;$group&quot;</span><span class="p">:{</span><span class="s">&quot;_id&quot;</span><span class="p">:</span><span class="s">&quot;$building&quot;</span><span class="p">,</span> <span class="s">&quot;count&quot;</span><span class="p">:{</span><span class="s">&quot;$sum&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">}}},</span>        
+            <span class="p">{</span><span class="s">&quot;$sort&quot;</span><span class="p">:{</span><span class="s">&quot;count&quot;</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">}},</span> 
+            <span class="p">{</span><span class="s">&quot;$limit&quot;</span><span class="p">:</span><span class="mi">10</span><span class="p">}]</span>
+<span class="n">result</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">collection</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">pipeline</span><span class="p">))</span>
+<span class="n">result</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[165]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[{u&#39;_id&#39;: u&#39;yes&#39;, u&#39;count&#39;: 3427},
+ {u&#39;_id&#39;: u&#39;apartments&#39;, u&#39;count&#39;: 375},
+ {u&#39;_id&#39;: u&#39;house&#39;, u&#39;count&#39;: 363},
+ {u&#39;_id&#39;: u&#39;commercial&#39;, u&#39;count&#39;: 266},
+ {u&#39;_id&#39;: u&#39;school&#39;, u&#39;count&#39;: 137},
+ {u&#39;_id&#39;: u&#39;hangar&#39;, u&#39;count&#39;: 48},
+ {u&#39;_id&#39;: u&#39;hotel&#39;, u&#39;count&#39;: 44},
+ {u&#39;_id&#39;: u&#39;roof&#39;, u&#39;count&#39;: 40},
+ {u&#39;_id&#39;: u&#39;retail&#39;, u&#39;count&#39;: 28},
+ {u&#39;_id&#39;: u&#39;college&#39;, u&#39;count&#39;: 27}]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>There are huge no of buildings in dataset</p>
+<p>Most of the building type were unspecified i.e 3427</p>
+<p>Although most common buildings are apartments, houses and commercial</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[166]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c">#Different types of shops in Honolulu</span>
+<span class="n">pipeline</span> <span class="o">=</span> <span class="p">[{</span><span class="s">&quot;$match&quot;</span><span class="p">:{</span><span class="s">&quot;shop&quot;</span><span class="p">:{</span><span class="s">&quot;$exists&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">}}},</span> 
+            <span class="p">{</span><span class="s">&quot;$group&quot;</span><span class="p">:{</span><span class="s">&quot;_id&quot;</span><span class="p">:</span><span class="s">&quot;$shop&quot;</span><span class="p">,</span> <span class="s">&quot;count&quot;</span><span class="p">:{</span><span class="s">&quot;$sum&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">}}},</span>        
+            <span class="p">{</span><span class="s">&quot;$sort&quot;</span><span class="p">:{</span><span class="s">&quot;count&quot;</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">}},</span> 
+            <span class="p">{</span><span class="s">&quot;$limit&quot;</span><span class="p">:</span><span class="mi">10</span><span class="p">}]</span>
+<span class="n">result</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">collection</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">pipeline</span><span class="p">))</span>
+<span class="n">result</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[166]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[{u&#39;_id&#39;: u&#39;supermarket&#39;, u&#39;count&#39;: 73},
+ {u&#39;_id&#39;: u&#39;convenience&#39;, u&#39;count&#39;: 42},
+ {u&#39;_id&#39;: u&#39;clothes&#39;, u&#39;count&#39;: 34},
+ {u&#39;_id&#39;: u&#39;department_store&#39;, u&#39;count&#39;: 13},
+ {u&#39;_id&#39;: u&#39;gift&#39;, u&#39;count&#39;: 11},
+ {u&#39;_id&#39;: u&#39;bakery&#39;, u&#39;count&#39;: 7},
+ {u&#39;_id&#39;: u&#39;mall&#39;, u&#39;count&#39;: 7},
+ {u&#39;_id&#39;: u&#39;doityourself&#39;, u&#39;count&#39;: 6},
+ {u&#39;_id&#39;: u&#39;hairdresser&#39;, u&#39;count&#39;: 5},
+ {u&#39;_id&#39;: u&#39;jewelry&#39;, u&#39;count&#39;: 5}]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So large no. of supermarkets, convenience and clothes stores are there in Honolulu</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[167]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c">#name of different schools</span>
@@ -13019,7 +13289,7 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[178]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[167]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -13053,7 +13323,7 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[180]:</div>
+<div class="prompt input_prompt">In&nbsp;[168]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c"># types of roads or highways</span>
@@ -13074,7 +13344,7 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[180]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[168]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -13103,11 +13373,11 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[181]:</div>
+<div class="prompt input_prompt">In&nbsp;[169]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c"># types of religion followed</span>
-<span class="n">pipeline</span> <span class="o">=</span> <span class="p">[{</span><span class="s">&quot;$match&quot;</span><span class="p">:{</span><span class="s">&quot;amenity&quot;</span><span class="p">:{</span><span class="s">&quot;$exists&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">},</span> <span class="s">&quot;amenity&quot;</span><span class="p">:</span><span class="s">&quot;place_of_worship&quot;</span><span class="p">}},</span>
+<span class="n">pipeline</span> <span class="o">=</span> <span class="p">[{</span><span class="s">&quot;$match&quot;</span><span class="p">:{</span><span class="s">&quot;religion&quot;</span><span class="p">:{</span><span class="s">&quot;$exists&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">}}},</span>
                       <span class="p">{</span><span class="s">&quot;$group&quot;</span><span class="p">:{</span><span class="s">&quot;_id&quot;</span><span class="p">:</span><span class="s">&quot;$religion&quot;</span><span class="p">,</span> <span class="s">&quot;count&quot;</span><span class="p">:{</span><span class="s">&quot;$sum&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">}}},</span>
                       <span class="p">{</span><span class="s">&quot;$sort&quot;</span><span class="p">:{</span><span class="s">&quot;count&quot;</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">}}]</span>
 <span class="n">result</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">collection</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">pipeline</span><span class="p">))</span> 
@@ -13122,13 +13392,12 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[181]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[169]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>[{u&#39;_id&#39;: u&#39;christian&#39;, u&#39;count&#39;: 22},
- {u&#39;_id&#39;: None, u&#39;count&#39;: 9},
- {u&#39;_id&#39;: u&#39;buddhist&#39;, u&#39;count&#39;: 6},
+<pre>[{u&#39;_id&#39;: u&#39;christian&#39;, u&#39;count&#39;: 25},
+ {u&#39;_id&#39;: u&#39;buddhist&#39;, u&#39;count&#39;: 7},
  {u&#39;_id&#39;: u&#39;muslim&#39;, u&#39;count&#39;: 1}]</pre>
 </div>
 
@@ -13144,7 +13413,7 @@ Kalakaua Ave =&gt; Kalakaua Avenue
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>So mostly Christian religion is followed ...</p>
-<h3 id="Additional-Idea">Additional Idea<a class="anchor-link" href="#Additional-Idea">&#182;</a></h3><p>For improving the database some validations should be applied while filling the information in specific way.</p>
+<h3 id="Additional-Idea">Additional Idea<a class="anchor-link" href="#Additional-Idea">&#182;</a></h3><p>For improving the database some validations should be applied while filling the information in specific way like some format or user interface should be provided to enter the data with inbuilt valdiations and warnings.</p>
 <p>And also user who contributed most should be displayed on the website so that others also try to contribute more by getting motivation from his/her work.</p>
 <blockquote><p>From above two ideas firstly data is entered in more proper format.
 Secondly contribution increases if you give some credit to persons who contributed more.</p>
@@ -13171,7 +13440,8 @@ Secondly contribution increases if you give some credit to persons who contribut
 <p>464 people were involved in its map editing out of which 1 contributed the most around 38%.</p>
 <p>Some errors in street name abbreviations and zip codes were found while auditing the dataset which were fixed by mapping.</p>
 <p>Parking is most frequent amenity in the area and in parking surface parking is most common.</p>
-<p>People there are fond of pizzas and burgers and other fast food items.</p>
+<p>People there are fond of pizzas and burgers and other fast food items and drinking coffee is also very common practice.</p>
+<p>There are many supermarkets, clothing shopping stores and big buildings in the city.</p>
 <p>Mostly Christians are there in that area.</p>
 <p>So data must have lots of other hidden information as any type of tag is allowed and could be more further explored.</p>
 
