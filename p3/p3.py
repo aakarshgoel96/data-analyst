@@ -11,7 +11,7 @@
 # 
 # 
 
-# In[135]:
+# In[44]:
 
 #importing all necessary files
 import os
@@ -25,7 +25,7 @@ import string
 from pymongo import MongoClient
 
 
-# In[136]:
+# In[45]:
 
 #Fetching osm data in python variable map_data
 datadir = ""
@@ -35,7 +35,7 @@ map_data = os.path.join(datadir, datafile)
 
 # ##  Problems Encountered in the Map(Auditing)
 
-# In[137]:
+# In[46]:
 
 ##iterative parsing using Element tree to process the map file and find out what tags are there
 def count_tags(filename):
@@ -52,7 +52,7 @@ pprint.pprint(map_tags)
 
 # Here we founded that there are 242190 nodes, 117607 tags, 25500 ways and 384 relation.
 
-# In[138]:
+# In[47]:
 
 #people invovlved in the map editing.
 def process_map(filename):
@@ -66,7 +66,7 @@ users = process_map(map_data)
 len(users)
 
 
-# In[139]:
+# In[48]:
 
 lower = re.compile(r'^([a-z]|_)*$')                    # Regular Expressions for different cases matching
 lower_colon = re.compile(r'^([a-z]|_)*:([a-z]|_)*$')
@@ -76,7 +76,7 @@ street_type_re = re.compile(r'\b\S+\.?$', re.IGNORECASE)
 
 # >These expressions are used for validating a string in particular format. 
 
-# In[140]:
+# In[49]:
 
 # initial expected street names
 expected = ["Street", "Avenue", "Boulevard","Broadway","Drive", "Court", "Place", "Square", "Lane",
@@ -85,7 +85,7 @@ expected = ["Street", "Avenue", "Boulevard","Broadway","Drive", "Court", "Place"
 
 # >Initially we consider some common words as expected street names.
 
-# In[141]:
+# In[50]:
 
 #Finding counts for different tag categories
 def key_type(element, keys):                  
@@ -125,7 +125,7 @@ pprint.pprint(map_keys)
 
 # ### Auditing Problems associating with street name abbreviations
 
-# In[142]:
+# In[51]:
 
 def audit_street_type(street_types, street_name):    # add unexpected street name to a list
     m = street_type_re.search(street_name)
@@ -158,7 +158,7 @@ pprint.pprint(dict(st_types))
 # 
 # >So some fix of names is required for that which can be done by mapping abbreviations to their full form.
 
-# In[143]:
+# In[52]:
 
 mapping={  'Ave'  : 'Avenue',             #mapping abbreviations to their full form
            'Ave.' : 'Avenue',
@@ -184,7 +184,7 @@ mapping={  'Ave'  : 'Avenue',             #mapping abbreviations to their full f
         }
 
 
-# In[144]:
+# In[53]:
 
 #updating street names to correct form
 def update_name(name, mapping, regex):                         
@@ -206,7 +206,7 @@ for street_type, ways in st_types.iteritems():       #iterating through all the 
 
 # ### Problems in zip codes
 
-# In[145]:
+# In[54]:
 
 # Auditing all zip codes in the given data
 from collections import defaultdict     
@@ -214,13 +214,8 @@ from collections import defaultdict
 def audit_zipcode(invalid_zipcodes, zipcode):
     twoDigits = zipcode[0:2]        #validating zip code and adding it to invalid if not satisfying the conditions
     
-    if not zipcode.isdigit():
+    if not re.match(r'^96\d{3}$', zipcode): #match five digit strings that start with '96'
         invalid_zipcodes[twoDigits].add(zipcode)
-    
-    elif twoDigits !="96" :
-        invalid_zipcodes[twoDigits].add(zipcode) 
-    elif len(zipcode)>5:
-        invalid_zipcodes[twoDigits].add(zipcode) 
         
 def is_zipcode(elem):
     return (elem.attrib['k'] == "addr:postcode")  
@@ -245,22 +240,10 @@ map_zipcode
 # 
 # >One type of zip code contain text.
 
-# In[146]:
+# In[101]:
 
 def update_zip(zipcode):                          # Fixing zip codes in case it don't match the desired pattern.
-    testNum = re.findall('[a-zA-Z]*', zipcode)
-    if testNum:
-        testNum = testNum[0]
-    testNum.strip('-')
-    if testNum == "HI":
-        convertedZipcode = (re.findall(r'\d+', zipcode))
-        if convertedZipcode:
-            if convertedZipcode.__len__() == 2:
-                return (re.findall(r'\d+', zipcode))[0] + "-" +(re.findall(r'\d+', zipcode))[1]
-            else:
-                return (re.findall(r'\d+', zipcode))[0]
-    else:        
-        return (re.findall(r'\d+', zipcode))[0]
+    return (re.findall(r'\d{5}', zipcode))[0]
 for street_type, ways in map_zipcode.iteritems():
     for name in ways:
         better_name = update_zip(name)
@@ -271,7 +254,7 @@ for street_type, ways in map_zipcode.iteritems():
 
 # ## Formatting data in required json Format
 
-# In[147]:
+# In[102]:
 
 CREATED = [ "version", "changeset", "timestamp", "user", "uid"]    #created field for json object
 # function that corrects incorrect street names
@@ -357,13 +340,13 @@ def process_map(file_in, pretty = False):
     return data
 
 
-# In[148]:
+# In[103]:
 
 # process the file
 data = process_map(map_data, True)
 
 
-# In[149]:
+# In[76]:
 
 #Above method shapes the data in following JSON Format
 data[352]
@@ -371,7 +354,7 @@ data[352]
 
 # ## Storing processed json data to MongoDB
 
-# In[150]:
+# In[77]:
 
 client = MongoClient()      # making mongodb connection importing json data to mongo db locally
 db = client.honolulu
@@ -379,47 +362,47 @@ collection = db.honolulu
 #collection.insert(data)       #insertion is done one time only ucomment it if haven't inserted.
 
 
-# In[151]:
+# In[78]:
 
 collection         #collection named honolulu for this data
 
 
 # ## Data Overview with MongoDB
 
-# In[152]:
+# In[79]:
 
 os.path.getsize(map_data)/1024/1024        #Size of xml file in MB
 
 
-# In[153]:
+# In[80]:
 
 os.path.getsize("honolulu_hawaii.osm.json")/1024/1024      #Size Of json file in MB
 
 
-# In[154]:
+# In[81]:
 
 collection.find().count()      #Total number of documents inside Mongo DB collection honolulu
 
 
-# In[155]:
+# In[82]:
 
 # Number of unique users
 len(collection.group(["created.uid"], {}, {"count":0}, "function(o, p){p.count++}"))
 
 
-# In[156]:
+# In[83]:
 
 # Number of nodes
 collection.find({"type":"node"}).count()
 
 
-# In[157]:
+# In[84]:
 
 # Number of ways
 collection.find({"type":"way"}).count()
 
 
-# In[158]:
+# In[85]:
 
 #Top five users with most contributions
 pipeline = [{"$group":{"_id": "$created.user",     
@@ -433,7 +416,7 @@ x
 
 # this shows that Tom_Holland is most active user.
 
-# In[159]:
+# In[86]:
 
 #Proportion of the top user contributions
 top_user_prop = [{"$group":{"_id": "$created.user",
@@ -449,7 +432,7 @@ result
 
 # ## Additional Ideas and further exploration
 
-# In[160]:
+# In[87]:
 
 #Most common amenities in the area
 aminity=[{"$match":{"amenity":{"$exists":1}}},
@@ -461,7 +444,7 @@ result
 
 # Most frequent amenities are parking, restaurant, fast_food respectively.
 
-# In[161]:
+# In[88]:
 
 # Types of parking and their frequency 
 pipeline = [{"$match":{"amenity":{"$exists":1}, "amenity":"parking", "parking":{"$exists":1}}}, 
@@ -474,7 +457,7 @@ result
 
 # Surface Parking is mostly performed so good road parking facilities in the area
 
-# In[162]:
+# In[89]:
 
 #cuisines in restaurants
 pipeline = [{"$match":{"amenity":{"$exists":1}, "amenity":"restaurant", "cuisine":{"$exists":1}}}, 
@@ -487,7 +470,7 @@ result
 
 # In restaurant most popular cuisine is Pizzas.
 
-# In[163]:
+# In[90]:
 
 #cuisines in fast_food
 pipeline = [{"$match":{"amenity":{"$exists":1}, "amenity":"fast_food", "cuisine":{"$exists":1}}}, 
@@ -500,7 +483,7 @@ result
 
 # burger is most popular cuisine in fast_food
 
-# In[164]:
+# In[91]:
 
 #Overall cusines of Honolulu
 pipeline = [{"$match":{"cuisine":{"$exists":1}}}, 
@@ -513,7 +496,7 @@ result
 
 # This data shows that most people prefer having Burgers in cuisines
 
-# In[165]:
+# In[92]:
 
 #different type of buildings in Honolulu dataset
 pipeline = [{"$match":{"building":{"$exists":1}}}, 
@@ -530,7 +513,7 @@ result
 # 
 # Although most common buildings are apartments, houses and commercial
 
-# In[166]:
+# In[93]:
 
 #Different types of shops in Honolulu
 pipeline = [{"$match":{"shop":{"$exists":1}}}, 
@@ -543,7 +526,7 @@ result
 
 # So large no. of supermarkets, convenience and clothes stores are there in Honolulu
 
-# In[167]:
+# In[95]:
 
 #name of different schools
 pipeline = [{"$match":{"amenity":{"$exists":1}, "amenity": "school", "name":{"$exists":1}}},
@@ -555,7 +538,7 @@ result
 
 # There are only single branch of every school in this city.
 
-# In[168]:
+# In[96]:
 
 # types of roads or highways
 pipeline = [{'$match': {'highway': { '$exists': 1}}}, 
@@ -569,7 +552,7 @@ result
 
 # So mostly residential area is there in the city which highway covers
 
-# In[169]:
+# In[97]:
 
 # types of religion followed
 pipeline = [{"$match":{"religion":{"$exists":1}}},
@@ -584,11 +567,15 @@ result
 # ### Additional Idea
 # 
 # For improving the database some validations should be applied while filling the information in specific way like some format or user interface should be provided to enter the data with inbuilt valdiations and warnings.
+# This interface will consist of all general formats information like pincode should be of 5 digits all numeric.
+# But validation also depends on location like in India pincode is of 6 digits therefore some changes are also necessary based on location.
 # 
 # And also user who contributed most should be displayed on the website so that others also try to contribute more by getting motivation from his/her work.
+# If there will be competitive environment then everyone will try their best in terms of quantity as well as quality of the data.
 # 
 # >From above two ideas firstly data is entered in more proper format.
-# Secondly contribution increases if you give some credit to persons who contributed more.
+# 
+# >Secondly contribution and quality increases if you give some credit to persons who contributed more.
 
 # # Conclusion
 
