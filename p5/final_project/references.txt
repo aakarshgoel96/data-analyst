@@ -1,5 +1,5 @@
 http://scikit-learn.org/stable/
 http://pages.cs.wisc.edu/~dpage/cs760/evaluating.pdf
 http://blog.kaggle.com/2012/07/06/the-dangers-of-overfitting-psychopathy-post-mortem/
-https://www.quora.com/What-are-the-advantages-and-disadvantages-of-machine-learninghttps://www.quora.com/What-are-the-advantages-and-disadvantages-of-machine-learning
+https://www.quora.com/What-are-the-advantages-and-disadvantages-of-machine-learning
 Course video lectures
