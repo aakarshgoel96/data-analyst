@@ -30,16 +30,46 @@ The goal of this project is to choose a combination of features, financial and e
 
 The Enron dataset contained 146 records with 14 financial features, 6 email features, and 1 labeled feature for POI. Out of the latter dataset, 18 people were labeled as persons of interest (POI). Interestingly, I had to omit email_address from the email features list due to it being a string while all the other features were integer values; it was hard to justify keeping unique email addresses as a POI identifier for fraud. Furthermore, I visualize the dataset's feature to conduct some basic exploratory data analysis. 
 
-Removed all the columns in the dataset whose half of the values are NaN type i.e >72. TOTAL field is removed as it has no relation with the model.
-
 Employees with very high salary were outliers so 'salary' is scaled using MinMaxScaler.
+Number of NAN values in each feature
+
+bonus                         64
+deferral_payments            107
+deferred_income               97
+director_fees                129
+email_address                 34
+exercised_stock_options       44
+expenses                      51
+fraction_from_poi_email        0
+fraction_to_poi_email          0
+from_messages                 59
+from_poi_to_this_person       59
+from_this_person_to_poi       59
+loan_advances                142
+long_term_incentive           80
+other                         53
+poi                            0
+restricted_stock              36
+restricted_stock_deferred    128
+salary                        51
+shared_receipt_with_poi       59
+to_messages                   59
+total_payments                21
+total_stock_value             20
+
+dtype: int64
+(145, 23)
 
 ** Q2 What features did you end up using in your POI identifier, and what selection process did you use to pick them? Did you have to do any scaling? Why or why not? As part of the assignment, you should attempt to engineer your own feature that does not come ready-made in the dataset -- explain what feature you tried to make, and the rationale behind it. (You do not necessarily have to use it in the final analysis, only engineer and test it.) In your feature selection step, if you used an algorithm like a decision tree, please also give the feature importances of the features that you use, and if you used an automated feature selection function like SelectKBest, please report the feature scores and reasons for your choice of parameter values.**
 
 I have used SelectKBest method to find out top features from which I selected three features except poi i.e
 salary, bonus, exercised_stock_options. Out of ten features these features together gave best results.
 
-{'salary': 18.575703268041785, 'total_payments': 8.8667215371077717, 'bonus': 21.060001707536571, 'total_stock_value': 24.467654047526398, 'shared_receipt_with_poi': 8.7464855321290802, 'exercised_stock_options': 25.097541528735491, 'fraction_to_poi_email': 16.641707070468989, 'deferred_income': 11.595547659730601, 'restricted_stock': 9.3467007910514877, 'long_term_incentive': 10.072454529369441}
+I chose 10 features out of 20 as many features have very high no. of NaN values and invalid entries also some features are not financially related so best approach was to consider ten features out of which features who gave best results are selected. 
+{'salary': 12.67530193334218, 'total_payments': 8.820001632226802, 'loan_advances': 7.8399999999999999, 'bonus': 16.949683809919712, 'total_stock_value': 12.95577518415493, 'shared_receipt_with_poi': 12.456030714094002, 'exercised_stock_options': 14.204386615510744, 'fraction_to_poi_email': 17.876294995193057, 'from_this_person_to_poi': 9.2717666911465741, 'from_poi_to_this_person': 12.088297399773165}
+
+
+Applied SelectKBest on training data as well but still got best results with the features chosen above
 
 I tried to make two new features i.e 
 fraction_to_poi_email: the fraction of all emails to a person that were sent from a person of interest
@@ -62,7 +92,7 @@ Machine learning mostly employs a gradient based method of optimizing a large ar
 
 If it is not done well then it can make result worse most of the score part is dependent upon parameters tuning .
 
-The KNeighborsClassifier with n_neighbors of 5 gave the best results - more so than KMeans - and was thus selected.
+The KNeighborsClassifier with n_neighbors of 5 gave the best results - more so than any other algorithm - and was thus selected.
 For any other value of n_neighbors parameter precision and recall drops down to an unconsiderable value.
 
 I have used GridSearchCV for tuning in the following parameters and using a stratified shuffle split on a thousand fold on KNeighborsClassifier:

@@ -90,24 +90,23 @@ df.replace(to_replace='NaN', value=numpy.nan, inplace=True)
 print df.head()
 print df.isnull().sum()
 print df.shape
-'''Selecting best features using SelectKBest'''
-from sklearn.feature_selection import SelectKBest
-data = featureFormat(data_dict, features_list, sort_keys = True)
-labels, features = targetFeatureSplit(data)
-k_best = SelectKBest(k=10)
-k_best.fit(features, labels)
-scores = k_best.scores_
-#combine features and scores, and sort in descending order
-feature_score_pairs = list(sorted(zip(features_list[1:], scores), key=lambda x: x[1], reverse=True))
-best_features = dict(feature_score_pairs[:10])
-print best_features
-features_list=['poi','exercised_stock_options','salary','bonus']
+
 
 ### Extract features and labels from dataset for local testing
 data = featureFormat(data_dict, features_list, sort_keys = True)
 labels, features = targetFeatureSplit(data)
 features = MinMaxScaler().fit_transform(features)
 features_train, features_test, labels_train, labels_test = train_test_split(features, labels, test_size=0.3)
+'''Selecting best features using SelectKBest'''
+from sklearn.feature_selection import SelectKBest
+k_best = SelectKBest(k=10)
+k_best.fit(features_train, labels_train)
+scores = k_best.scores_
+#combine features and scores, and sort in descending order
+feature_score_pairs = list(sorted(zip(features_list[1:], scores), key=lambda x: x[1], reverse=True))
+best_features = dict(feature_score_pairs[:10])
+print best_features
+features_list=['poi','exercised_stock_options','salary','bonus']
 ### Task 4: Try a varity of classifiers
 ### Please name your classifier clf for easy export below.
 ### Note that if you want to do PCA or other multi-stage operations,
@@ -131,7 +130,7 @@ test_classifier(ab_clf,data_dict, features_list)
 ### function. Because of the small size of the dataset, the script uses
 ### stratified shuffle split cross validation. For more info: 
 ### http://scikit-learn.org/stable/modules/generated/sklearn.cross_validation.StratifiedShuffleSplit.html
-'''choosing KNeighbours Classifier and tuning its parameters'''
+#choosing KNeighbours Classifier and tuning its parameters
 from sklearn.grid_search import GridSearchCV
 cv = StratifiedShuffleSplit(labels, 1000, random_state = 42)
 metrics = ['minkowski', 'euclidean', 'manhattan'] 
@@ -142,7 +141,7 @@ clf_knc = GridSearchCV(KNeighborsClassifier(), param_grid=param_grid_knc, cv=cv)
 clf_knc.fit(features, labels)
 print clf_knc.best_estimator_
 print clf_knc.best_score_
-'''Tuning parameters of KNeighbours according to above results.'''
+#Tuning parameters of KNeighbours according to above results.
 print "Final Result after tuning the parameters"
 clf = Pipeline(steps=[('classifier',  KNeighborsClassifier(algorithm='auto', leaf_size=30, 
     metric='manhattan',metric_params=None, n_jobs=1, n_neighbors=5, p=2, weights='uniform')
