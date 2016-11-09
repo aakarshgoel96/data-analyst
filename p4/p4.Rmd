@@ -43,6 +43,14 @@ table(df$quality)
 ```
 It shows that there are 5 types of numerical quality in this data set ranging from 3 to 8 and most values of quality are 5 & 6.
 
+#### Factoring quality
+
+```{r echo = FALSE}
+#Factoring quality for better plots
+df$quality.factor<-factor(df$quality)
+str(df$quality.factor)
+```
+
 ## Univariate Plots
 
 #### Creating Histograms for all the 12 variables.
@@ -63,6 +71,7 @@ grid.arrange(qplot(df$fixed.acidity),
              qplot(df$quality),
              nrow = NULL, ncol=NULL, newpage = TRUE)
 ```
+
 Histograms depicts that density, pH and quality have similar structure i.e in normalised form. Others have typical structure some are skewed to left, some have oultiers mostly sulphur related factors, chlroides and residual sugar. Citric acid contains many null values.
 
 #### New Features
@@ -273,17 +282,23 @@ All the above plots justify the correlation that how other variables increase or
 Plotting relationships b/w the variables having high correlation with quality.
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 grid.arrange(ggplot(data = df, aes(x = sulphates, y = alcohol)) +
-               geom_point() + stat_smooth(method = 'lm', se=FALSE),
+               geom_jitter(alpha = 0.05, size = 2)+
+               stat_smooth(method = 'lm', se=FALSE),
              ggplot(data = df, aes(x = volatile.acidity, y = alcohol)) +
-               geom_point() + stat_smooth(method = 'lm', se=FALSE),
+               geom_jitter(alpha = 0.05, size = 2)+
+               stat_smooth(method = 'lm', se=FALSE),
              ggplot(data = df, aes(x = sulphates, y = volatile.acidity)) +
-               geom_point() + stat_smooth(method = 'lm', se=FALSE),
+               geom_jitter(alpha = 0.05, size = 2) +
+               stat_smooth(method = 'lm', se=FALSE),
              ggplot(data = df, aes(x = alcohol, y = citric.acid)) +
-               geom_point() + stat_smooth(method = 'lm', se=FALSE),
+               geom_jitter(alpha = 0.05, size = 2) +
+               stat_smooth(method = 'lm', se=FALSE),
              ggplot(data = df, aes(x = sulphates, y = total.sulfur.dioxide)) +
-               geom_point() + stat_smooth(method = 'lm', se=FALSE),
+               geom_jitter(alpha = 0.05, size = 2) +
+               stat_smooth(method = 'lm', se=FALSE),
              ggplot(data = df, aes(x = volatile.acidity, y = total.sulfur.dioxide)) +
-               geom_point() + stat_smooth(method = 'lm', se=FALSE))
+               geom_jitter(alpha = 0.05, size = 2) +
+               stat_smooth(method = 'lm', se=FALSE))
 
 ``` 
 
@@ -330,46 +345,49 @@ Also sulphates(0.25139708), citric acid(0.22637251), total.sulfur.dioxide (-0.18
 Let's see how these variables compare, plotted against each other and faceted by wine rating and coloured by wine quality.
 
 ```{r echo=FALSE,  message=FALSE, warning=FALSE}
-ggplot(data = df, aes(x = sulphates, y = alcohol,color=quality)) +
+ggplot(data = df, aes(x = sulphates, y = alcohol,color=quality.factor)) +
   facet_wrap(~review) +
   geom_point()+ 
   stat_smooth(method="lm", se=FALSE)
 
-ggplot(data = df, aes(x = volatile.acidity, y = alcohol, color=quality)) +
+ggplot(data = df, aes(x = volatile.acidity, y = alcohol, color=quality.factor)) +
   geom_point()+
   facet_wrap(~review)+
   stat_smooth(method="lm", se=FALSE)
 
-ggplot(data = df, aes(x = citric.acid, y = alcohol, color=quality)) +
+ggplot(data = df, aes(x = citric.acid, y = alcohol, color=quality.factor)) +
   facet_wrap(~review) +
   geom_point()+
   stat_smooth(method="lm", se=FALSE)
 
-ggplot(data = df, aes(x = volatile.acidity, y = sulphates, color=quality)) +
+ggplot(data = df, aes(x = volatile.acidity, y = sulphates, color=quality.factor)) +
   facet_wrap(~review) +
   geom_point()+
   stat_smooth(method="lm", se=FALSE)
   
 
-ggplot(data = df, aes(x = citric.acid, y = sulphates, color=quality)) +
+ggplot(data = df, aes(x = citric.acid, y = sulphates, color=quality.factor)) +
   facet_wrap(~review) +
   geom_point()+
   stat_smooth(method="lm", se=FALSE)
 
 ggplot(data = df,
        aes(x = citric.acid, y = volatile.acidity,
-           color = quality)) +
+           color = quality.factor)) +
   geom_point() +
   facet_wrap(~review)+
   stat_smooth(method="lm", se=FALSE)
 
 
 ggplot(data = df,
-       aes(x = pH, y = total_acidity, color = quality)) +
+       aes(x = pH, y = total_acidity, color = quality.factor)) +
   geom_point() +
   facet_wrap(~review)+
   stat_smooth(method="lm", se=FALSE)
+
 ```
+
+Above plots show that volatile acidity is very negatively correlated with quality and other positive factors. Volatile acidity makes not only quality of beer low but affects citric acid, alcohol, sulphates and many otherpositive features. correlation b/w citric acid and volatile acidity is -0.55 which affects it a lot.
 
 ## Multivariate Analysis
 
@@ -395,22 +413,26 @@ grid.arrange(ggplot(data = df, aes(x = quality, y = fixed.acidity,
                                   color=review)) + 
                ylab('Fixed Acidity (g/dm^3)') +
                xlab('Quality') +
-               geom_point(),
+               geom_point()+
+               labs(color='Quality Review') ,
              ggplot(data = df, aes(x = quality, y = volatile.acidity,
                                    color = review)) +
                ylab('Volatile Acidity (g/dm^3)') +
                xlab('Quality') +
-               geom_point(), 
+               geom_point()+
+               labs(color='Quality Review') , 
              ggplot(data = df, aes(x = quality, y = citric.acid,
                                    color = review)) +
                ylab('Citric Acid (g/dm^3)') +
                xlab('Quality') +
-               geom_point(), 
+               geom_point()+
+               labs(color='Quality Review') , 
              ggplot(data = df, aes(x = quality, y = total_acidity,
                                    color = review)) +
                ylab('total acidity') +
                xlab('Quality') +
-               geom_point())
+               geom_point()+
+               labs(color='Quality Review'))
 
 ```
 
@@ -427,7 +449,9 @@ ggplot(data = subset(df, review != 'avg'),
   geom_point() +
   ggtitle('Alcohol vs. Volatile Acidity and Wine Quality') +
   xlab('Volatile Acidity (g / dm^3)') +
-  ylab('Alcohol (% volume)')
+  ylab('Alcohol (% volume)')+
+  labs(color='Quality Review') 
+  
 ```
 
 ### Description Two
@@ -447,7 +471,8 @@ ggplot(aes(x = alcohol, y = sulphates), data = dfs) +
   geom_hline(yintercept = mean(df$sulphates), linetype = 2, color = 'black') + 
   xlab('Alcohol (% by volume)') + 
   ylab('Sulphate (g/dm^3)') + 
-  ggtitle('Distribution of sulphates and alcohol across wine quality ratings')
+  ggtitle('Distribution of sulphates and alcohol across wine quality ratings')+
+  labs(color='Quality Review') 
 
 ```
 
@@ -459,10 +484,12 @@ Its most interesting and important visualisation that shows good wines have an a
 
 Through this exploratory data analysis, I was able to identify the key factors that are correlated with red wine quality, i.e, alcohol , sulphates, and acidity.
 
-alcohol, citric acid, sulphates are positively correlated with quality
+I faced difficulty in plotting ggpairs scatterplot it was very complicated and I simplified it using limited variables for plot
+
+I founded that Alcohol, citric acid, sulphates are positively correlated with quality
 Volatile acidity alone has a lot of negative correlation with quality.
 
-Scatterplots, Boxplots and histograms are mainly used for exploratory visualization of this dataset. The final plots depict the relationship of acidity to a good wine, and most importantly, such a wine will likely come high alcohol content, high sulphates and low volatile acidity.
+I mainly used Scatterplots, Boxplots and histograms for exploratory visualization of this dataset. The final plots depict the relationship of acidity to a good wine, and most importantly, such a wine will likely contain high alcohol content, high sulphates and low volatile acidity.
 
 ### References
 
