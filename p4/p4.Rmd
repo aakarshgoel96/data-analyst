@@ -474,30 +474,32 @@ No, I didn't create any model.
 
 ### Plot 1: Effect of different acids on wine quality
 ```{r echo=FALSE, Plot_One, message=FALSE, warning=FALSE}
-grid.arrange(ggplot(data = df, aes(x = quality, y = fixed.acidity,
+grid.arrange(ggplot(data = df, aes(x = quality.factor, y = fixed.acidity,
                                   color=review)) + 
                ylab('Fixed Acidity (g/dm^3)') +
                xlab('Quality') +
-               geom_jitter(alpha=0.2)+
-               labs(color='Quality Review') ,
-             ggplot(data = df, aes(x = quality, y = volatile.acidity,
+               geom_jitter(alpha=0.5)+
+               scale_colour_brewer("Quality\nReview", palette = "Reds"),
+             ggplot(data = df, aes(x = quality.factor, y = volatile.acidity,
                                    color = review)) +
                ylab('Volatile Acidity (g/dm^3)') +
                xlab('Quality') +
-               geom_jitter(alpha=0.2)+
-               labs(color='Quality Review') , 
-             ggplot(data = df, aes(x = quality, y = citric.acid,
+               geom_jitter(alpha=0.5)+
+               scale_colour_brewer("Quality\nReview", palette = "Reds") , 
+             ggplot(data = df, aes(x = quality.factor, y = citric.acid,
                                    color = review)) +
                ylab('Citric Acid (g/dm^3)') +
                xlab('Quality') +
-               geom_jitter(alpha=0.2)+
-               labs(color='Quality Review') , 
-             ggplot(data = df, aes(x = quality, y = total_acidity,
+               geom_jitter(alpha=0.5)+
+               scale_colour_brewer("Quality\nReview", palette = "Reds") , 
+             
+             ggplot(data = df, aes(x = quality.factor, y = total_acidity,
                                    color = review)) +
                ylab('total acidity') +
                xlab('Quality') +
-               geom_jitter(alpha=0.2)+
-               labs(color='Quality Review'))
+               geom_jitter(alpha=0.5)+
+               scale_colour_brewer("Quality\nReview", palette = "Reds")
+             )
 
 ```
 
