@@ -357,19 +357,21 @@ Let's see how these variables compare, plotted against each other and faceted by
 ```{r echo=FALSE,  message=FALSE, warning=FALSE}
 ggplot(data = df, aes(x = sulphates, y = alcohol,color=quality.factor)) +
   facet_wrap(~review) +
-  geom_jitter()+ 
-  stat_smooth(method="lm", se=FALSE)+
-  scale_colour_brewer("Quality\nFactor")
+  geom_jitter(alpha=0.3)+ 
+  stat_smooth(method="lm", se=FALSE, size=2)+
+  scale_colour_brewer("Quality\nFactor")+
+  theme_dark()
 ```
 
 This plot depicts that alcohol is more positively correlated with quality than sulphates but still increase in levels of both the factors improve quality of wine.
 
 ```{r echo=FALSE,  message=FALSE, warning=FALSE}
 ggplot(data = df, aes(x = volatile.acidity, y = alcohol, color=quality.factor)) +
-  geom_jitter()+
+  geom_jitter(alpha=0.3)+
   facet_wrap(~review)+
-  stat_smooth(method="lm", se=FALSE)+
-  scale_colour_brewer("Quality\nFactor")
+  stat_smooth(method="lm", se=FALSE, size=2)+
+  scale_colour_brewer("Quality\nFactor")+
+  theme_dark()
 ```
 
 It depicts that when alcohol values are high and volatile acidity is low then high quality wines will be formed. And for average wine quality both the factors should be balanced.
@@ -377,9 +379,10 @@ It depicts that when alcohol values are high and volatile acidity is low then hi
 ```{r echo=FALSE,  message=FALSE, warning=FALSE}
 ggplot(data = df, aes(x = citric.acid, y = alcohol, color=quality.factor)) +
   facet_wrap(~review) +
-  geom_jitter()+
-  stat_smooth(method="lm", se=FALSE)+
-  scale_colour_brewer("Quality\nFactor")
+  geom_jitter(alpha=0.3)+
+  stat_smooth(method="lm", se=FALSE, size=2)+
+  scale_colour_brewer("Quality\nFactor")+
+  theme_dark()
 ```
 
 Both the factors alcohol and citric acid are positively correlated with quality.
@@ -387,9 +390,10 @@ Both the factors alcohol and citric acid are positively correlated with quality.
 ```{r echo=FALSE,  message=FALSE, warning=FALSE}
 ggplot(data = df, aes(x = volatile.acidity, y = sulphates, color=quality.factor)) +
   facet_wrap(~quality.factor) +
-  geom_jitter()+
-  stat_smooth(method="lm", se=FALSE)+
-  scale_colour_brewer("Quality\nFactor")
+  geom_jitter(alpha=0.3)+
+  stat_smooth(method="lm", se=FALSE, size=2)+
+  scale_colour_brewer("Quality\nFactor")+
+  theme_dark()
 ```
 
 Sulphates don't show much correlation with volatile acidity alone, volatile acidity lowers the quality of wine more prominently than sulphates.
@@ -397,9 +401,10 @@ Sulphates don't show much correlation with volatile acidity alone, volatile acid
 ```{r echo=FALSE,  message=FALSE, warning=FALSE}  
 ggplot(data = df, aes(x = citric.acid, y = sulphates, color=quality.factor)) +
   facet_wrap(~review) +
-  geom_jitter()+
-  stat_smooth(method="lm", se=FALSE)+
-  scale_colour_brewer("Quality\nFactor")
+  geom_jitter(alpha=0.3)+
+  stat_smooth(method="lm", se=FALSE, size=2)+
+  scale_colour_brewer("Quality\nFactor")+
+  theme_dark()
 ```
 
 Both the factors citric acid and sulphates together lead to increase the quality of the red wine, but citric acid has more effect than sulphates in increasing the quality of the wine. 
@@ -408,10 +413,11 @@ Both the factors citric acid and sulphates together lead to increase the quality
 ggplot(data = df,
        aes(x = citric.acid, y = volatile.acidity,
            color = quality.factor)) +
-  geom_jitter() +
+  geom_jitter(alpha=0.3) +
   facet_wrap(~review)+
-  stat_smooth(method="lm", se=FALSE)+
-  scale_colour_brewer("Quality\nFactor")
+  stat_smooth(method="lm", se=FALSE, size=2)+
+  scale_colour_brewer("Quality\nFactor")+
+  theme_dark()
 
 ```
 
@@ -478,27 +484,31 @@ grid.arrange(ggplot(data = df, aes(x = quality.factor, y = fixed.acidity,
                                   color=review)) + 
                ylab('Fixed Acidity (g/dm^3)') +
                xlab('Quality') +
-               geom_jitter(alpha=0.5)+
-               scale_colour_brewer("Quality\nReview", palette = "Reds"),
+               geom_jitter(alpha=0.3)+
+               scale_colour_brewer("Quality\nReview", palette = "Reds")+
+               theme_dark(),
              ggplot(data = df, aes(x = quality.factor, y = volatile.acidity,
                                    color = review)) +
                ylab('Volatile Acidity (g/dm^3)') +
                xlab('Quality') +
-               geom_jitter(alpha=0.5)+
-               scale_colour_brewer("Quality\nReview", palette = "Reds") , 
+               geom_jitter(alpha=0.3)+
+               scale_colour_brewer("Quality\nReview", palette = "Reds")+
+               theme_dark(), 
              ggplot(data = df, aes(x = quality.factor, y = citric.acid,
                                    color = review)) +
                ylab('Citric Acid (g/dm^3)') +
                xlab('Quality') +
-               geom_jitter(alpha=0.5)+
-               scale_colour_brewer("Quality\nReview", palette = "Reds") , 
+               geom_jitter(alpha=0.3)+
+               scale_colour_brewer("Quality\nReview", palette = "Reds")+
+               theme_dark(), 
              
              ggplot(data = df, aes(x = quality.factor, y = total_acidity,
                                    color = review)) +
                ylab('total acidity') +
                xlab('Quality') +
-               geom_jitter(alpha=0.5)+
-               scale_colour_brewer("Quality\nReview", palette = "Reds")
+               geom_jitter(alpha=0.3)+
+               scale_colour_brewer("Quality\nReview", palette = "Reds")+
+               theme_dark()
              )
 
 ```
@@ -512,7 +522,7 @@ These plots were created to demonstrate the effect of acidity on wine quality.  
 ggplot(data = subset(df, review != 'avg'),
        aes(x = volatile.acidity, y = alcohol,
                       color = review)) +
-  geom_point() +
+  geom_jitter(alpha=0.3) +
   ggtitle('Alcohol vs. Volatile Acidity and Wine Quality') +
   xlab('Volatile Acidity (g / dm^3)') +
   ylab('Alcohol (% volume)')+
@@ -528,12 +538,12 @@ This is perhaps the most descriptive visualisation. I subsetted the data to remo
 ### Plot 3: Sulphates and alcohol on Wine quality ratings
 ```{r echo=FALSE, Plot_Three, message=FALSE, warning=FALSE}
 dfs <- subset(df, review!= 'avg')
-ggplot(aes(x = alcohol, y = sulphates), data = dfs) + 
+ggplot(aes(x = alcohol, y = sulphates, color=review), data = dfs) + 
   coord_cartesian(
     xlim = c(quantile(df$alcohol, .01), quantile(df$alcohol, .99)),
     ylim = c(quantile(df$sulphates, .01), quantile(df$sulphates, .99))
   ) + 
-  geom_jitter(alpha = 0.5, size = 3, aes(color = review)) + 
+  geom_jitter(alpha = 0.4, size = 2) + 
   geom_vline(xintercept = mean(df$alcohol), linetype = 2, color = 'black') + 
   geom_hline(yintercept = mean(df$sulphates), linetype = 2, color = 'black') + 
   xlab('Alcohol (% by volume)') + 
