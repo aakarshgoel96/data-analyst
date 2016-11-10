@@ -177,7 +177,11 @@ Making scatter plot of some interesting variables in dataset
 ```{r echo=FALSE, Bivariate_Plots, message=FALSE, warning=FALSE}
 set.seed(1996)
 df_sample<-df[sample(1:length(df$quality), 50),]
-ggpairs(df_sample[, c("fixed.acidity","volatile.acidity","citric.acid","density","pH","sulphates", "alcohol","quality")],columnLabels = c("f.a", "v.a", "citric", "density","pH","sulphate","alcohol","quality"), mapping =NULL,
+ggpairs(df_sample[, c("fixed.acidity","volatile.acidity",
+                      "citric.acid","density","pH","sulphates",
+                      "alcohol","quality")],columnLabels = 
+          c("f.a", "v.a", "citric", "density","pH","sulphate","alcohol",
+            "quality"), mapping =NULL,
         lower = list(continuous = wrap("points", shape = I('.'))),
         upper = list(combo = wrap("box", outlier.shape = I('.'))),axisLabels = "none")+
   theme(axis.text =element_blank(),
@@ -263,17 +267,23 @@ Quantitatively, it appears that the following variables have relatively higher c
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 grid.arrange(ggplot(data = df, aes(x = quality, y = alcohol)) +
-               geom_point() + stat_smooth(method = 'lm', se=FALSE),
+               geom_jitter(alpha=0.1) + 
+               stat_smooth(method = 'lm', se=FALSE),
              ggplot(data = df, aes(x = quality, y = sulphates)) +
-               geom_point() + stat_smooth(method = 'lm', se=FALSE),
+               geom_jitter(alpha=0.1) +
+               stat_smooth(method = 'lm', se=FALSE),
              ggplot(data = df, aes(x = quality, y = volatile.acidity)) +
-               geom_point() + stat_smooth(method = 'lm', se=FALSE),
+               geom_jitter(alpha=0.1) + 
+               stat_smooth(method = 'lm', se=FALSE),
              ggplot(data = df, aes(x = quality, y = citric.acid)) +
-               geom_point() + stat_smooth(method = 'lm', se=FALSE),
+               geom_jitter(alpha=0.1) + 
+               stat_smooth(method = 'lm', se=FALSE),
              ggplot(data = df, aes(x = quality, y = total.sulfur.dioxide)) +
-               geom_point() + stat_smooth(method = 'lm', se=FALSE),
+               geom_jitter(alpha=0.1)+
+               stat_smooth(method = 'lm', se=FALSE),
              ggplot(data = df, aes(x = quality, y = density)) +
-               geom_point() + stat_smooth(method = 'lm', se=FALSE))
+               geom_jitter(alpha=0.1) +
+               stat_smooth(method = 'lm', se=FALSE))
 
 ```
 
@@ -347,47 +357,102 @@ Let's see how these variables compare, plotted against each other and faceted by
 ```{r echo=FALSE,  message=FALSE, warning=FALSE}
 ggplot(data = df, aes(x = sulphates, y = alcohol,color=quality.factor)) +
   facet_wrap(~review) +
-  geom_point()+ 
-  stat_smooth(method="lm", se=FALSE)
+  geom_jitter()+ 
+  stat_smooth(method="lm", se=FALSE)+
+  scale_colour_brewer("Quality\nFactor")
+```
 
+This plot depicts that alcohol is more positively correlated with quality than sulphates but still increase in levels of both the factors improve quality of wine.
+
+```{r echo=FALSE,  message=FALSE, warning=FALSE}
 ggplot(data = df, aes(x = volatile.acidity, y = alcohol, color=quality.factor)) +
-  geom_point()+
+  geom_jitter()+
   facet_wrap(~review)+
-  stat_smooth(method="lm", se=FALSE)
+  stat_smooth(method="lm", se=FALSE)+
+  scale_colour_brewer("Quality\nFactor")
+```
 
+It depicts that when alcohol values are high and volatile acidity is low then high quality wines will be formed. And for average wine quality both the factors should be balanced.
+
+```{r echo=FALSE,  message=FALSE, warning=FALSE}
 ggplot(data = df, aes(x = citric.acid, y = alcohol, color=quality.factor)) +
   facet_wrap(~review) +
-  geom_point()+
-  stat_smooth(method="lm", se=FALSE)
+  geom_jitter()+
+  stat_smooth(method="lm", se=FALSE)+
+  scale_colour_brewer("Quality\nFactor")
+```
 
+Both the factors alcohol and citric acid are positively correlated with quality.
+
+```{r echo=FALSE,  message=FALSE, warning=FALSE}
 ggplot(data = df, aes(x = volatile.acidity, y = sulphates, color=quality.factor)) +
-  facet_wrap(~review) +
-  geom_point()+
-  stat_smooth(method="lm", se=FALSE)
-  
+  facet_wrap(~quality.factor) +
+  geom_jitter()+
+  stat_smooth(method="lm", se=FALSE)+
+  scale_colour_brewer("Quality\nFactor")
+```
 
+Sulphates don't show much correlation with volatile acidity alone, volatile acidity lowers the quality of wine more prominently than sulphates.
+
+```{r echo=FALSE,  message=FALSE, warning=FALSE}  
 ggplot(data = df, aes(x = citric.acid, y = sulphates, color=quality.factor)) +
   facet_wrap(~review) +
-  geom_point()+
-  stat_smooth(method="lm", se=FALSE)
+  geom_jitter()+
+  stat_smooth(method="lm", se=FALSE)+
+  scale_colour_brewer("Quality\nFactor")
+```
 
+Both the factors citric acid and sulphates together lead to increase the quality of the red wine, but citric acid has more effect than sulphates in increasing the quality of the wine. 
+
+```{r echo=FALSE,  message=FALSE, warning=FALSE}
 ggplot(data = df,
        aes(x = citric.acid, y = volatile.acidity,
            color = quality.factor)) +
-  geom_point() +
+  geom_jitter() +
   facet_wrap(~review)+
-  stat_smooth(method="lm", se=FALSE)
-
-
-ggplot(data = df,
-       aes(x = pH, y = total_acidity, color = quality.factor)) +
-  geom_point() +
-  facet_wrap(~review)+
-  stat_smooth(method="lm", se=FALSE)
+  stat_smooth(method="lm", se=FALSE)+
+  scale_colour_brewer("Quality\nFactor")
 
 ```
 
-Above plots show that volatile acidity is very negatively correlated with quality and other positive factors. Volatile acidity makes not only quality of beer low but affects citric acid, alcohol, sulphates and many otherpositive features. correlation b/w citric acid and volatile acidity is -0.55 which affects it a lot.
+Correlation b/w citric acid and volatile acidity is -0.55 and both the factors affect quality in positive and negative aspects.
+
+Two main features I found out which effects wine quality a lot are alcohol and volatile acidity so lets plot b/w them at extreme wine review i.e which makes wine more low or more high.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(data = subset(df, review != 'avg'),
+       aes(x = volatile.acidity, y = alcohol,
+                      color = review)) +
+  geom_jitter() +
+  ggtitle('Alcohol vs. Volatile Acidity and Wine Quality') +
+  xlab('Volatile Acidity (g / dm^3)') +
+  ylab('Alcohol (% volume)')+
+  labs(color='Quality Review')
+```
+
+The plot clearly depicts that quality review becomes high when when alcohol volume is high and becomes low when volatile acidity content becomes low.
+
+Also alcohol and sulphates together affect a lot in quality review in positive direction so lets visualize how they affect quality extremities together.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+dfs <- subset(df, review!= 'avg')
+ggplot(aes(x = alcohol, y = sulphates), data = dfs) + 
+  coord_cartesian(
+    xlim = c(quantile(df$alcohol, .01), quantile(df$alcohol, .99)),
+    ylim = c(quantile(df$sulphates, .01), quantile(df$sulphates, .99))
+  ) + 
+  geom_jitter(alpha = 0.5, size = 3, aes(color = review)) + 
+  geom_vline(xintercept = mean(df$alcohol), linetype = 2, color = 'black') + 
+  geom_hline(yintercept = mean(df$sulphates), linetype = 2, color = 'black') + 
+  xlab('Alcohol (% by volume)') + 
+  ylab('Sulphate (g/dm^3)') + 
+  ggtitle('Distribution of sulphates and alcohol across wine quality ratings')+
+  labs(color='Quality Review')
+```
+
+Above plot depicts that  both factors alcohol and sulphates at high levelsresult in high quality review and vice versa.
+
+Above plots show that volatile acidity is very negatively correlated with quality and other positive factors. Volatile acidity makes not only quality of beer low but affects citric acid, alcohol, sulphates and many other positive features. 
 
 ## Multivariate Analysis
 
@@ -413,29 +478,28 @@ grid.arrange(ggplot(data = df, aes(x = quality, y = fixed.acidity,
                                   color=review)) + 
                ylab('Fixed Acidity (g/dm^3)') +
                xlab('Quality') +
-               geom_point()+
+               geom_jitter(alpha=0.2)+
                labs(color='Quality Review') ,
              ggplot(data = df, aes(x = quality, y = volatile.acidity,
                                    color = review)) +
                ylab('Volatile Acidity (g/dm^3)') +
                xlab('Quality') +
-               geom_point()+
+               geom_jitter(alpha=0.2)+
                labs(color='Quality Review') , 
              ggplot(data = df, aes(x = quality, y = citric.acid,
                                    color = review)) +
                ylab('Citric Acid (g/dm^3)') +
                xlab('Quality') +
-               geom_point()+
+               geom_jitter(alpha=0.2)+
                labs(color='Quality Review') , 
              ggplot(data = df, aes(x = quality, y = total_acidity,
                                    color = review)) +
                ylab('total acidity') +
                xlab('Quality') +
-               geom_point()+
+               geom_jitter(alpha=0.2)+
                labs(color='Quality Review'))
 
 ```
-
 
 ### Description One
 
@@ -450,13 +514,14 @@ ggplot(data = subset(df, review != 'avg'),
   ggtitle('Alcohol vs. Volatile Acidity and Wine Quality') +
   xlab('Volatile Acidity (g / dm^3)') +
   ylab('Alcohol (% volume)')+
-  labs(color='Quality Review') 
+  labs(color='Quality Review')+
+  geom_density_2d()
   
 ```
 
 ### Description Two
 
-This is perhaps the most descriptive visualisation. I subsetted the data to remove the 'average' quality wines, or any wine with a rating of 5 or 6.  As the correlation tests show, wine quality was affected most strongly by alcohol and volatile acidity.It shows that high volatile acidity kept wine quality down and vice-versa. A combination of high alcohol content and low volatile acidity produced better wines.
+This is perhaps the most descriptive visualisation. I subsetted the data to remove the 'average' quality wines, or any wine with a rating of 5 or 6.  As the correlation tests show, wine quality was affected most strongly by alcohol and volatile acidity.It shows that high volatile acidity kept wine quality down and vice-versa. A combination of high alcohol content and low volatile acidity produced better wines with few outliers.
 
 ### Plot 3: Sulphates and alcohol on Wine quality ratings
 ```{r echo=FALSE, Plot_Three, message=FALSE, warning=FALSE}
@@ -472,7 +537,8 @@ ggplot(aes(x = alcohol, y = sulphates), data = dfs) +
   xlab('Alcohol (% by volume)') + 
   ylab('Sulphate (g/dm^3)') + 
   ggtitle('Distribution of sulphates and alcohol across wine quality ratings')+
-  labs(color='Quality Review') 
+  labs(color='Quality Review')+
+  geom_density_2d()
 
 ```
 
@@ -490,6 +556,10 @@ I founded that Alcohol, citric acid, sulphates are positively correlated with qu
 Volatile acidity alone has a lot of negative correlation with quality.
 
 I mainly used Scatterplots, Boxplots and histograms for exploratory visualization of this dataset. The final plots depict the relationship of acidity to a good wine, and most importantly, such a wine will likely contain high alcohol content, high sulphates and low volatile acidity.
+
+There should be more information in the dataset like oxidation factors of wine which really affects it quality because oxidation develops and adds aromatic complexity. As a result, the wines become more flavorful and earthy. In red wines, it softens the tannins and stabilizes color.
+
+Now for future work using these factors as the features, a predictive model can be made using machine learning algorithms which predicts that what quality review should be given to beer with certain features.
 
 ### References
 
