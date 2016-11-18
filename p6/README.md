@@ -24,7 +24,12 @@ Pre- Feedback i.e initial visualisations:
 
 ### Feedback
 
-I gathered feedback from 3 different people people and tried to follow Udacity questions guideline and here are the improvisations suggested. 
+I gathered feedback from 3 different people by providing them with this page to visualise
+
+- [Initial visualization](https://bl.ocks.org/aakarshgoel96/becb21ee667b49cfd4c927b5aa98390c)
+
+
+Here are the improvisations suggested. 
 
 #### Interview #1
 
@@ -52,6 +57,13 @@ Final visualisations of the data visualization is shown below:
 ![Final Chart 1](data/fin1.png)
 ![Final Chart 2](data/fin2.png)
 ![Final Chart 3](data/fin3.png)
+
+### Results
+
+-Visualizations depicts that high class passengers were able to survive more. Survival rate
+-Female gender survived more than male gender and in all classes.
+-Most of the passengers of age b/w 0-15 were survived.
+-From above inferences we conclude that children and females were first saved ordered by their passanger class.
 
 ### References
 
