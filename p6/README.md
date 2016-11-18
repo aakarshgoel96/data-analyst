@@ -60,10 +60,10 @@ Final visualisations of the data visualization is shown below:
 
 ### Results
 
--Visualizations depicts that high class passengers were able to survive more. Survival rate
--Female gender survived more than male gender and in all classes.
--Most of the passengers of age b/w 0-15 were survived.
--From above inferences we conclude that children and females were first saved ordered by their passanger class.
+- Visualizations depicts that high class passengers were able to survive more. Survival rate
+- Female gender survived more than male gender and in all classes.
+- Most of the passengers of age b/w 0-15 were survived.
+- From above inferences we conclude that children and females were first saved ordered by their passanger class.
 
 ### References
 
