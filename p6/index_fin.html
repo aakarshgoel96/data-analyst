@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Titanic Data Exploration</title>
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet"/>
+    <style>
+      h2,h4,#chart1,#chart2,#chart3{
+        color: black;
+        text-align: center;
+      }
+    </style>
+  </head>
+
+<body class="container">
+	<script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://dimplejs.org/dist/dimple.v1.1.2.min.js"></script>
+	<div class="row">
+		<div id="chart1"></div>
+	</div>
+
+	<div class="row">
+		<div id="chart2"></div>
+	</div>
+
+	<div class="row">
+		<div id="chart3"></div>
+	</div>
+
+	<script type="text/javascript">
+		var width = 600,
+		    height = 400;
+
+		// 1 - Titanic survivors based on Passenger's class	
+		    
+		    d3.select("#chart1").append("h4").text("Titanic survivors based on Passenger's class");
+		    var svg1 = dimple.newSvg("#chart1", width, height);
+		    d3.csv("data/data.csv", function(data){
+				var chart = new dimple.chart(svg1, data);
+			    x=chart.addCategoryAxis("x", "Class");
+			    x.addOrderRule("Class", false);
+			    y=chart.addMeasureAxis("y", "Survived");
+			    y.tickFormat = ',.2f';
+			    var mySeries=chart.addSeries("Class", dimple.plot.bar);
+			    mySeries.aggregate = dimple.aggregateMethod.avg;
+				var legend=chart.addLegend(65, 10, 510, 20, "right");
+				chart.draw();
+		  	});
+
+		// 2 - Titanic survivors based on gender and class
+
+		    d3.select("#chart2").append("h4").text("Titanic survivors based on gender and class");
+		    var svg2 = dimple.newSvg("#chart2", width, height);
+		    d3.csv("data/data.csv", function(data){
+				var chart = new dimple.chart(svg2, data);
+			    x=chart.addCategoryAxis("x", ["Class","Sex"]);
+			    x.addOrderRule("Class", false);
+			    y=chart.addMeasureAxis("y", "Survived");
+			    y.tickFormat = ',.2f';
+			    var mySeries=chart.addSeries("Sex", dimple.plot.bar);
+			    mySeries.aggregate = dimple.aggregateMethod.avg;
+				chart.addLegend(65, 10, 510, 20, "right");
+				chart.draw();
+		    });
+
+		// 3 - Titanic survivors based on age group and class
+
+		    d3.select("#chart3").append("h4").text("Titanic survivors based on age group and class");
+		    var svg3 = dimple.newSvg("#chart3", width, height);
+		    d3.csv("data/data.csv", function(data){
+				var chart = new dimple.chart(svg3, data);
+		    	x = chart.addCategoryAxis("x", ["Class","Age Group"]);
+		    	x.addOrderRule("Class", false);
+		    	y=chart.addMeasureAxis("y", "Survived");
+		    	y.tickFormat = ',.2f';
+		    	var mySeries= chart.addSeries("Age Group",dimple.plot.bar);
+		    	mySeries.aggregate = dimple.aggregateMethod.avg;
+		    	chart.addLegend(65, 10, 510, 20, "right");
+				chart.draw();
+		    });	
+
+	    
+	</script>
