@@ -56,6 +56,7 @@ Following the feedback from the 3 interviews, I implemented the following change
 - I made an extra chart just representing survival rate across different Passenger Classes.
 - I ordered the x-axis in proper sequence of Passenger class using addOrderRule function.
 - I showed survival proportions upto 2 decimal places using tickFormat function.
+- Made visualisations more explanatory with proper descrpition and formatting.
 
 Final visualisations of the data visualization is shown below:
 
