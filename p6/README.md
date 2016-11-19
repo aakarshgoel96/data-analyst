@@ -20,7 +20,12 @@ Since I have comparative data that I would like to represent through a chart the
 Pre- Feedback i.e initial visualisations:
 
 ![First Chart](data/init1.png)
+
+This visualisation depicts that in all type of passenger classes female gender survived more than males, in Class1 and Class 2 more than 90% of females were survived.
+
 ![Second Chart](data/init2.png)
+
+This visualisation depicts that in mostly young age group survived and children b/w 0-15 were saved first.
 
 ### Feedback
 
